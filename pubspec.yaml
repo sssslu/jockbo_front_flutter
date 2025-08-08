@@ -1,0 +1,36 @@
+name: jockbo_flutter
+description: A Flutter Web implementation of the Andong Jang clan genealogy viewer.  
+version: 1.0.0
+
+environment:
+  # This project has been written with a null‑safe Dart version.
+  sdk: '>=2.17.0 <4.0.0'
+
+# Dependencies declare external packages used by the application.  
+# Do not remove the flutter dependency; it must always be present.
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # HTTP client for REST requests to the Node.js backend.
+  http: ^0.13.5
+
+  # Simple state management and dependency injection.
+  provider: ^6.0.5
+
+  # Icon set matching the original React project.  
+  font_awesome_flutter: ^10.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Declare assets that are bundled with the application.  
+  assets:
+    - assets/loopLoadingSpinner.gif
+    - assets/searchLoadingSpinner.gif
+    - assets/backGround.png
