@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models.dart';
 
 const Color _connectorColor = Color(0xFF3C2317);
-const double _connectorStrokeWidth = 1.5;
+const double _connectorStrokeWidth = 3;
 
 
 /// 부모‑자식 또는 형제 사이의 선을 그리기 위한 단순 구조체
