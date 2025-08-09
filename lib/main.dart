@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => AppState(),
       child: MaterialApp(
-        title: 'Andong Jang Genealogy',
+        title: '온라인족보',
         debugShowCheckedModeBanner: false,
         // Use a light theme similar to the React project
         theme: ThemeData(

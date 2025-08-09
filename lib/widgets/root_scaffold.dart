@@ -34,7 +34,7 @@ class RootScaffold extends StatelessWidget {
               children: [
                 const SizedBox(height: 20),
                 const Text(
-                  '안동장씨 이천백파 남해종친회',
+                  '샘플박씨 예시파 서울종친회',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
