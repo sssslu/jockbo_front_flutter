@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:html' as html; // ✅ 추가
 
-/// A navigation bar displayed at the top of the app.  It roughly
-/// corresponds to the `NavBar` component in the React project.  Each
-/// entry routes to a different section of the application.  The
-/// currently active route is highlighted.
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
 
@@ -17,7 +14,8 @@ class NavBar extends StatelessWidget {
       return TextButton(
         onPressed: () {
           if (currentPath != route) {
-            Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(route, (route) => false);
           }
         },
         style: TextButton.styleFrom(
@@ -34,11 +32,11 @@ class NavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          // External site link.  In a real deployment you could use
-          // `url_launcher` or `dart:html` to open this link.  Leaving it
-          // disabled here avoids compilation issues on non‑web targets.
+          // ✅ 홈페이지 버튼 클릭 시 slupark.com 새 탭에서 열기
           TextButton(
-            onPressed: null,
+            onPressed: () {
+              html.window.open('https://slupark.com', '_blank');
+            },
             style: TextButton.styleFrom(
               foregroundColor: Colors.grey,
               textStyle: const TextStyle(fontWeight: FontWeight.bold),
