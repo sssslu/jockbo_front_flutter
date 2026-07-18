@@ -13,8 +13,8 @@ void main() {
   runApp(const MyApp());
 }
 
-// 🔗 너의 Node.js 서버 (Fly)
-const String _apiBase = 'https://slusphere.fly.dev';
+// 🔗 너의 Node.js 서버 (홈서버 Docker — ngrok /sphere 경로로 공개)
+const String _apiBase = 'https://wick-ribbon-player.ngrok-free.dev/sphere';
 // ✅ 이 프로젝트 전용 카운터 id (포트폴리오가 1이면, 여긴 2처럼 따로 쓰자)
 
 class MyApp extends StatelessWidget {
@@ -99,7 +99,9 @@ class _ViewCountOverlayState extends State<ViewCountOverlay> {
   Future<void> _bumpAndLoadViewCount() async {
     try {
       final res =
-      await http.get(Uri.parse('$_apiBase/viewcount/2'));
+      await http.get(Uri.parse('$_apiBase/viewcount/2'),
+          // ngrok 무료 도메인의 브라우저 경고 페이지 우회 (값은 아무거나)
+          headers: {'ngrok-skip-browser-warning': '1'});
       if (res.statusCode == 200) {
         final data = jsonDecode(res.body);
         final v = data['viewCount'];

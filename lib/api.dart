@@ -3,9 +3,6 @@ import 'package:http/http.dart' as http;
 
 import 'models.dart';
 
-/// Base URL for all network requests.  The underlying Node.js server
-/// exposes endpoints like `/all`, `/list`, `/search`, etc.  The value
-/// can be overridden at compile time using `--dart-define=BASE_URL=...`.
 //const String _baseUrl = 'http://localhost:8080';
 const String _baseUrl = 'https://jokbonode.fly.dev';
 
