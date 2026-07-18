@@ -31,7 +31,9 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
+# build 산출물은 무시하되, Netlify 배포용 build/web 은 커밋한다
+/build/*
+!/build/web/
 
 # Symbolication related
 app.*.symbols

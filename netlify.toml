@@ -1,0 +1,10 @@
+# 커밋된 build/web 을 그대로 서빙 (Netlify 에서 Flutter 빌드 안 함)
+[build]
+  publish = "build/web"
+  command = "echo 'no build - serving committed build/web'"
+
+# SPA 라우팅: 어떤 경로로 들어와도 index.html 로
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
