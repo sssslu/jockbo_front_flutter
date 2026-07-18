@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../models.dart';
+import '../theme.dart';
 
-const Color _connectorColor = Color(0xFF3C2317);
-const double _connectorStrokeWidth = 3;
+const Color _connectorColor = Color(0x7A5B4636); // 옅은 먹빛 연결선
+const double _connectorStrokeWidth = 2;
 
 // === 세대 정렬을 위해 ‘모두가 공유’할 크기 상수 ===
 const double _nodeWidth  = 72;   // 노드 가로
@@ -25,7 +26,8 @@ class _LinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = _connectorColor
-      ..strokeWidth = _connectorStrokeWidth;
+      ..strokeWidth = _connectorStrokeWidth
+      ..strokeCap = StrokeCap.round;
     for (final l in lines) {
       canvas.drawLine(l.start, l.end, paint);
     }
@@ -142,16 +144,23 @@ class _JockBoTreeState extends State<JockBoTree> {
       for (int sae = saeStart; sae <= saeEnd; sae++) {
         // 라벨 박스(노드 높이와 동일)
         list.add(Container(
-          width: 40,
+          width: 44,
           height: _nodeHeight,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: ((sae - saeStart).isEven)
-                ? const Color(0xFFF8EDE3)
-                : const Color(0xFFDFD3C3),
-            borderRadius: BorderRadius.circular(4),
+                ? AppColors.paperDark
+                : AppColors.tan.withOpacity(0.55),
+            borderRadius: BorderRadius.circular(6),
           ),
-          child: Text('${sae}世'),
+          child: Text(
+            '${sae}世',
+            style: const TextStyle(
+              fontSize: 11.5,
+              fontWeight: FontWeight.w600,
+              color: AppColors.inkLight,
+            ),
+          ),
         ));
         if (sae != saeEnd) {
           // 세대 간격(노드가 자식으로 내려갈 때 사용하는 간격과 동일)
@@ -202,30 +211,47 @@ class _JockBoTreeState extends State<JockBoTree> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // 노드 박스 — 높이를 상수로 고정
-                GestureDetector(
-                  key: key,
-                  onTap: () => widget.onSelect(item.id),
-                  child: Container(
-                    width: _nodeWidth,
-                    height: _nodeHeight,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: item.id == widget.myId
-                          ? const Color(0xFFC55300)
-                          : const Color(0xFF815B5B),
-                      borderRadius: BorderRadius.circular(6),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x663C2317),
-                          offset: Offset(2, 2),
-                          blurRadius: 4,
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    key: key,
+                    onTap: () => widget.onSelect(item.id),
+                    child: Container(
+                      width: _nodeWidth,
+                      height: _nodeHeight,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: item.id == widget.myId
+                            ? AppColors.persimmon
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: item.id == widget.myId
+                              ? AppColors.persimmon
+                              : AppColors.tan,
                         ),
-                      ],
-                    ),
-                    child: Text(
-                      '${item.myName}\n${item.myNamechi}',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: item.id == widget.myId
+                                ? const Color(0x59C05621)
+                                : const Color(0x14000000),
+                            offset: const Offset(0, 3),
+                            blurRadius: 8,
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        '${item.myName}\n${item.myNamechi}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: item.id == widget.myId
+                              ? Colors.white
+                              : AppColors.ink,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          height: 1.25,
+                        ),
+                      ),
                     ),
                   ),
                 ),

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../api.dart';
 import '../app_state.dart';
 import '../models.dart';
+import '../theme.dart';
 
 class DetailInfo extends StatefulWidget {
   const DetailInfo({Key? key}) : super(key: key);
@@ -56,56 +57,91 @@ class _DetailInfoState extends State<DetailInfo> {
             : info.ect;
         final eBookPage = ((info.mySae - 1) ~/ 5) + 1;
 
-        return Container(
-          width: 1100,
-          margin: const EdgeInsets.fromLTRB(30, 20, 0, 20),
+        return AppCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              // 이름 · 세(世) 칩 · E-BOOK 버튼
+              Wrap(
+                spacing: 12,
+                runSpacing: 10,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text(
-                    '${info.myName} (${info.myNamechi}) - ${info.mySae}世',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    '${info.myName} (${info.myNamechi})',
+                    style: const TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.ink,
+                    ),
                   ),
-                  const SizedBox(width: 16),
-                  ElevatedButton(
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: AppColors.tan.withOpacity(0.45),
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      '${info.mySae}世',
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.inkLight,
+                      ),
+                    ),
+                  ),
+                  ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/eBook/$eBookPage/${info.id}');
+                      Navigator.of(context)
+                          .pushNamed('/eBook/$eBookPage/${info.id}');
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFC55300),
+                      backgroundColor: AppColors.persimmon,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
                     ),
-                    child: const Text('족보 E‑BOOK'),
+                    icon: const Icon(Icons.menu_book_outlined, size: 17),
+                    label: const Text('족보 E‑BOOK'),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
-              const Text(
-                '족보등재내용',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 4),
-              if (info.ect.isEmpty)
-                const Text('')
-              else
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(_showMore ? info.ect : preview),
-                    if (info.ect.length > _textLimit)
-                      GestureDetector(
-                        onTap: () => setState(() => _showMore = !_showMore),
-                        child: const Text(
-                          '...[더보기]',
-                          style: TextStyle(
-                            color: Color(0xFF61764B),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                  ],
+              if (info.ect.isNotEmpty) ...[
+                const SizedBox(height: 14),
+                const Divider(height: 1),
+                const SizedBox(height: 14),
+                const Text(
+                  '족보 등재 내용',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textMuted,
+                    letterSpacing: 0.5,
+                  ),
                 ),
+                const SizedBox(height: 8),
+                Text(
+                  _showMore ? info.ect : preview,
+                  style: const TextStyle(
+                    fontSize: 14.5,
+                    height: 1.7,
+                    color: AppColors.inkLight,
+                  ),
+                ),
+                if (info.ect.length > _textLimit)
+                  TextButton.icon(
+                    onPressed: () => setState(() => _showMore = !_showMore),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 6),
+                    ),
+                    icon: Icon(
+                      _showMore ? Icons.expand_less : Icons.expand_more,
+                      size: 18,
+                    ),
+                    label: Text(_showMore ? '접기' : '더보기'),
+                  ),
+              ],
             ],
           ),
         );

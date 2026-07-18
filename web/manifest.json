@@ -1,11 +1,11 @@
 {
-    "name": "jockbo_flutter",
-    "short_name": "jockbo_flutter",
+    "name": "온라인족보",
+    "short_name": "온라인족보",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FBF8F2",
+    "theme_color": "#2E2018",
+    "description": "샘플박씨 예시파 서울종친회 온라인족보",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

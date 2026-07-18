@@ -7,6 +7,7 @@ import 'app_state.dart';
 import 'pages/search_page.dart';
 import 'pages/jockbo8_page.dart';
 import 'pages/ebook_page.dart';
+import 'theme.dart';
 import 'widgets/root_scaffold.dart';
 
 void main() {
@@ -27,10 +28,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: '온라인족보',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.brown,
-          fontFamily: 'Inter',
-        ),
+        theme: buildAppTheme(),
         // 🔻 모든 페이지 위에 조회수 배너를 오버레이로 붙임
         builder: (context, child) => ViewCountOverlay(child: child),
         onGenerateRoute: (settings) {
@@ -120,46 +118,59 @@ class _ViewCountOverlayState extends State<ViewCountOverlay> {
     }
   }
 
+  /// 1234567 -> '1,234,567'
+  String _formatCount(int n) {
+    final s = n.toString();
+    final buf = StringBuffer();
+    for (int i = 0; i < s.length; i++) {
+      buf.write(s[i]);
+      final left = s.length - 1 - i;
+      if (left > 0 && left % 3 == 0) buf.write(',');
+    }
+    return buf.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // 배너 색상: 검정(투명도 약간) + 얇은 경계선
-    final banner = (_viewCount == -1)
-        ? const SizedBox.shrink()
-        : Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: const Center(),
-    );
-
     return Stack(
       children: [
         // 원래의 페이지
         if (widget.child != null) widget.child!,
-        // 맨 아래 배너(배경)
-        if (_viewCount != -1)
+        // 하단 중앙의 조회수 알약(pill) 배너
+        if (_viewCount > 0)
           Positioned(
             left: 0,
             right: 0,
-            bottom: 0,
-            child: banner,
-          ),
-        // 배너 텍스트
-        if (_viewCount != -1)
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 20,
+            bottom: 14,
             child: IgnorePointer(
               ignoring: true, // 클릭 방해 안 하게
               child: Center(
-                child: Text(
-                  'Total : $_viewCount views',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    decoration: TextDecoration.none,
-                    fontSize: 13,
-                    shadows: [
-                      Shadow(offset: Offset(0, 0), blurRadius: 2, color: Colors.black54),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                  decoration: BoxDecoration(
+                    color: const Color(0xCC2E2018),
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.visibility_outlined,
+                        size: 14,
+                        color: Color(0xFFD9C4AE),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        '${_formatCount(_viewCount)} views',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          decoration: TextDecoration.none,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 0.4,
+                        ),
+                      ),
                     ],
                   ),
                 ),

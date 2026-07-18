@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../models.dart';
+import '../theme.dart';
 
 /// A form that allows the user to enter search criteria.  It
 /// corresponds to the `SearchForm` component in the React project.
-/// When the user presses the search button the form calls
+/// When the user presses the search button (or Enter) the form calls
 /// [onSearch] with a [SearchDataInfo] containing only the non‑empty
 /// fields.  Pressing the reset button clears all fields and calls
 /// [onReset].
@@ -59,80 +60,68 @@ class _SearchFormState extends State<SearchForm> {
     widget.onReset();
   }
 
+  Widget _field(
+    TextEditingController controller,
+    String label,
+    IconData icon, {
+    TextInputType? keyboardType,
+  }) {
+    return SizedBox(
+      width: 160,
+      child: TextField(
+        controller: controller,
+        keyboardType: keyboardType,
+        textInputAction: TextInputAction.search,
+        onSubmitted: (_) => _handleSearch(), // Enter 로 바로 검색
+        decoration: InputDecoration(
+          labelText: label,
+          prefixIcon: Icon(icon, size: 18),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          '족보 검색',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          '조건을 입력하고 Enter 또는 검색 버튼을 누르세요. 이름만으로도 검색됩니다.',
+          style: TextStyle(fontSize: 12.5, color: AppColors.textMuted),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 14),
         Wrap(
-          spacing: 16,
-          runSpacing: 8,
+          spacing: 12,
+          runSpacing: 12,
           children: [
-            SizedBox(
-              width: 150,
-              child: TextField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: '이름',
-                  border: UnderlineInputBorder(),
-                ),
-              ),
+            _field(_nameController, '이름', Icons.person_outline),
+            _field(
+              _saeController,
+              '세(世)',
+              Icons.tag,
+              keyboardType: TextInputType.number,
             ),
-            SizedBox(
-              width: 150,
-              child: TextField(
-                controller: _saeController,
-                decoration: const InputDecoration(
-                  labelText: '세(世)',
-                  border: UnderlineInputBorder(),
-                ),
-                keyboardType: TextInputType.number,
-              ),
-            ),
-            SizedBox(
-              width: 150,
-              child: TextField(
-                controller: _fatherController,
-                decoration: const InputDecoration(
-                  labelText: '부 이름',
-                  border: UnderlineInputBorder(),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 150,
-              child: TextField(
-                controller: _grandPaController,
-                decoration: const InputDecoration(
-                  labelText: '조부 이름',
-                  border: UnderlineInputBorder(),
-                ),
-              ),
-            ),
+            _field(_fatherController, '부 이름', Icons.supervisor_account),
+            _field(_grandPaController, '조부 이름', Icons.elderly),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 16),
         Row(
           children: [
-            ElevatedButton(
+            ElevatedButton.icon(
               onPressed: _handleSearch,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF939B62), // palette.green
+                backgroundColor: AppColors.persimmon,
               ),
-              child: const Text('검색'),
+              icon: const Icon(Icons.search, size: 18),
+              label: const Text('검색'),
             ),
-            const SizedBox(width: 8),
-            ElevatedButton(
+            const SizedBox(width: 10),
+            OutlinedButton.icon(
               onPressed: _handleReset,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF85586F), // palette.purple
-              ),
-              child: const Text('초기화'),
+              icon: const Icon(Icons.refresh, size: 18),
+              label: const Text('초기화'),
             ),
           ],
         ),

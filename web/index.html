@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -18,21 +18,72 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="온라인족보">
+  <meta name="description" content="온라인족보 - 샘플박씨 예시파 서울종친회">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FBF8F2">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="jockbo_flutter">
+  <meta name="apple-mobile-web-app-title" content="온라인족보">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>jockbo_flutter</title>
+  <title>온라인족보</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #FBF8F2;
+    }
+    /* 첫 프레임 전까지 보여줄 로딩 화면 */
+    #splash {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      background: #FBF8F2;
+      z-index: 9999;
+      transition: opacity .3s ease;
+    }
+    #splash .title {
+      font-family: "Noto Serif KR", "Batang", Georgia, serif;
+      font-size: 22px;
+      letter-spacing: 6px;
+      color: #2E2018;
+    }
+    #splash .ring {
+      width: 34px;
+      height: 34px;
+      border: 3px solid #E4DACB;
+      border-top-color: #C05621;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
 </head>
 <body>
+  <div id="splash">
+    <div class="title">온라인족보</div>
+    <div class="ring"></div>
+  </div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var s = document.getElementById('splash');
+      if (s) {
+        s.style.opacity = '0';
+        setTimeout(function () { s.remove(); }, 300);
+      }
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
