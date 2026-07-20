@@ -80750,7 +80750,7 @@ var $async$uV=A.S(function(a,b){if(a===1){o.push(b)
 s=p}while(true)switch(s){case 0:p=4
 h=t.N
 s=7
-return A.V(A.Gh(A.hr("https://wick-ribbon-player.ngrok-free.dev/sphere/viewcount/2"),A.ay(["ngrok-skip-browser-warning","1"],h,h)),$async$uV)
+return A.V(A.Gh(A.hr("https://wick-ribbon-player.ngrok-free.dev/jockbo/viewcount/2"),A.ay(["ngrok-skip-browser-warning","1"],h,h)),$async$uV)
 case 7:m=b
 if(m.b===200){h=m
 l=B.bk.mM(0,A.vY(A.vQ(h.e).c.a.h(0,"charset")).dL(0,h.w),null)

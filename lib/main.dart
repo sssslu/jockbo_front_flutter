@@ -15,7 +15,7 @@ void main() {
 }
 
 // 🔗 너의 Node.js 서버 (홈서버 Docker — ngrok /sphere 경로로 공개)
-const String _apiBase = 'https://wick-ribbon-player.ngrok-free.dev/sphere';
+const String _apiBase = 'https://wick-ribbon-player.ngrok-free.dev/jockbo';
 // ✅ 이 프로젝트 전용 카운터 id (포트폴리오가 1이면, 여긴 2처럼 따로 쓰자)
 
 class MyApp extends StatelessWidget {
